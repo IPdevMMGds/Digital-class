@@ -21,3 +21,16 @@
   color: red;
   margin-top: 10px;
 }
+.show-password {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.show-password input {
+  width: auto;
+  margin: 0;
+  padding: 0;
+}

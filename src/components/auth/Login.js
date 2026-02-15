@@ -1,11 +1,12 @@
 import React, { useState } from "react"
 import { loginUser } from "../../services/authService"
 import "./Auth.css"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 function Login() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
+    const [showPassword, setShowPassword] = useState(false)
     const navigate = useNavigate()
     const handleLogin = async (e) => {
         e.preventDefault()
@@ -28,15 +29,25 @@ function Login() {
                     required
                 />
                 <input 
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
+                <label className="show-password">
+                    <input
+                        type="checkbox"
+                        onChange={() => setShowPassword(!showPassword)}
+                    />
+                    Show Password
+                </label>
                 <button type="submit">Login</button>
             </form>
             {error && <p className="error-text">{error}</p>}
+            <p>
+                Don't have an account? <Link to="/signup">Sign up</Link>
+            </p>
         </div>
     )
 }
