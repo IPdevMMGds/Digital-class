@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { loginUser } from "../../services/authService"
+import { resendConfirmationEmail } from "../../services/authService"
 import "./Auth.css"
 import { useNavigate, Link } from "react-router-dom"
 function Login() {
@@ -7,12 +8,18 @@ function Login() {
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
     const [showPassword, setShowPassword] = useState(false)
+    const [unconfirmedEmail, setUnconfirmedEmail] = useState("")
     const navigate = useNavigate()
     const handleLogin = async (e) => {
         e.preventDefault()
         const { error } = await loginUser(email, password)
         if (error) {
-            setError(error.message)
+            if (error.message.includes("Email not confirmed")) {
+                setError("Email not confirmed.")
+                setUnconfirmedEmail(email)
+            } else {
+                setError(error.message)
+            }
         } else {
             navigate("/dashboard")
         }
@@ -45,6 +52,22 @@ function Login() {
                 <button type="submit">Login</button>
             </form>
             {error && <p className="error-text">{error}</p>}
+            {unconfirmedEmail && (
+                <button
+                    type="button"
+                    onClick={async () => {
+                        const { error } = await resendConfirmationEmail(unconfirmedEmail)
+                        if (error) {
+                            setError(error.message)
+                        } else {
+                            setError("Confirmation email resent.")
+                        }
+                    }}
+                    style={{ marginTop: "10px" }}
+                >
+                    Resend Confirmation Email
+                </button>
+            )}
             <p>
                 Don't have an account? <Link to="/signup">Sign up</Link>
             </p>

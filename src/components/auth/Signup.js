@@ -8,13 +8,17 @@ function Signup() {
     const [error, setError] = useState("")
     const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState(false)
+    const [loading, setLoading] = useState(false)
     const handleSignup = async (e) => {
         e.preventDefault()
+        if (loading) return
+        setLoading(true)
         const { error } = await signUpUser(email, password)
+        setLoading(false)
         if (error) {
             setError(error.message)
         } else {
-            navigate("/")
+            navigate("/confirm-email", { state: { email } })
         }
     }
     return (
@@ -42,7 +46,9 @@ function Signup() {
                     />
                     Show Password
                 </label>
-                <button type="submit">Create Account</button>
+                <button type="submit" disabled={loading}>
+                    {loading ? "Creating Account..." : "Create Account"}
+                </button>
             </form>
             {error && <p className="error-text">{error}</p>}
             <p>

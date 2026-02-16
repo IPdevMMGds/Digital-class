@@ -17,3 +17,9 @@ export const logoutUser = async () => {
 export const getCurrentUser = async () => {
     return await supabase.auth.getUser()
 }
+export const resendConfirmationEmail = async (email) => {
+    return await supabase.auth.resend({
+        type: "signup",
+        email: email
+    })
+}
