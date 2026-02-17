@@ -25,3 +25,4 @@ yarn-error.log*
 
 #extras
 .Show-FolderTree.ps1
+.Show-FolderTree_exicutorcode.txt

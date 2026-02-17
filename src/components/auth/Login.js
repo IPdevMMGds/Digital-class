@@ -1,6 +1,5 @@
 import React, { useState } from "react"
-import { loginUser } from "../../services/authService"
-import { resendConfirmationEmail } from "../../services/authService"
+import { resendConfirmationEmail, loginUser } from "../../services/authService"
 import "./Auth.css"
 import { useNavigate, Link } from "react-router-dom"
 function Login() {

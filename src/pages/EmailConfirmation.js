@@ -1,8 +1,7 @@
 import React, { useState } from "react"
 import { resendConfirmationEmail } from "../services/authService"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import "../App.css"
-import { useLocation } from "react-router-dom"
 function EmailConfirmation() {
     const location = useLocation()
     const email = location.state?.email
