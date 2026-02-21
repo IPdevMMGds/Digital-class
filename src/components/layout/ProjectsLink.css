@@ -1,0 +1,9 @@
+.projects-link {
+  cursor: pointer;
+  padding: 5px 10px;
+  color: #333;
+  transition: color 0.2s;
+}
+.projects-link:hover {
+  color: #007bff;
+}

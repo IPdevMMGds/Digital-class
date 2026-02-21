@@ -1,0 +1,33 @@
+.subjects-dropdown {
+  position: relative;
+  cursor: pointer;
+}
+.subjects-toggle {
+  font-weight: normal;
+  color: #333;
+  transition: color 0.2s;
+}
+.subjects-toggle:hover {
+  color: #007bff;
+}
+.subjects-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  list-style: none;
+  margin: 5px 0 0 0;
+  padding: 5px 0;
+  min-width: 120px;
+  z-index: 1001;
+}
+.subjects-list li {
+  padding: 5px 15px;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+.subjects-list li:hover {
+  background-color: #f0f0f0;
+}

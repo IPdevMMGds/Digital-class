@@ -1,0 +1,9 @@
+.user-name {
+  cursor: pointer;
+  font-weight: bold;
+  color: #333;
+  transition: color 0.2s;
+}
+.user-name:hover {
+  color: #007bff; /* highlight on hover */
+}

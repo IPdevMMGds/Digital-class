@@ -1,0 +1,14 @@
+.clock-date {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: monospace;
+  color: #333;
+}
+.clock-date .time {
+  font-size: 16px;
+  font-weight: bold;
+}
+.clock-date .date {
+  font-size: 12px;
+}

@@ -1,0 +1,9 @@
+.back-button {
+  cursor: pointer;
+  padding: 5px 10px;
+  color: #333;
+  transition: color 0.2s;
+}
+.back-button:hover {
+  color: #007bff;
+}

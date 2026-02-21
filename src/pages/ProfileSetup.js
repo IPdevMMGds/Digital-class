@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { getGradeList, updateUserInformation, getUserInformation } from "../services/userService"
 import { useNavigate } from "react-router-dom"
+import { logoutUser } from "../services/authService"
 function ProfileSetup() {
     const navigate = useNavigate()
     const [grades, setGrades] = useState([])
@@ -42,6 +43,10 @@ function ProfileSetup() {
         await updateUserInformation(form)
         navigate("/dashboard")
     }
+    const handleLogout = async () => {
+            await logoutUser()
+            navigate("/")
+        }
     return (
         <div className="profile-container">
             <h2>Complete Your Profile</h2>
@@ -85,6 +90,10 @@ function ProfileSetup() {
                 ))}
                 <button type="submit" disabled={!form.First_Name || !form.Last_Name || !form.Grade || !form.Subject_1}>Save</button>
             </form>
+            <div>
+                <h1>Dashboard</h1>
+                <button onClick={handleLogout}>Logout</button>
+            </div>
         </div>
     )
 }
