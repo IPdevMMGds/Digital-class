@@ -2,13 +2,17 @@ import React, { useEffect, useState } from "react"
 import { getGradeList, updateUserInformation, getUserInformation } from "../services/userService"
 import { useNavigate } from "react-router-dom"
 import { logoutUser } from "../services/authService"
+import { return_ } from "../components/utility/x_close";
+import { UserContext } from "../components/context/UserContext"
+import { useContext } from "react"
 function ProfileSetup() {
+    const { user, loading, fetchUser } = useContext(UserContext)
     const navigate = useNavigate()
     const [grades, setGrades] = useState([])
     const [form, setForm] = useState({
         First_Name: "",
         Last_Name: "",
-        Grade: "",
+        Grade: null,
         Subject_1: "",
         Subject_2: "",
         Subject_3: "",
@@ -24,31 +28,47 @@ function ProfileSetup() {
     const loadData = async () => {
         const { data: gradeData } = await getGradeList()
         setGrades(gradeData)
-
         const { data: userData } = await getUserInformation()
-        setForm(userData)
+        setForm({
+            ...userData,
+            Grade: userData.Grade ? Number(userData.Grade) : ""
+        })
+        console.log(userData)
     }
     const handleChange = (e) => {
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value
-        })
+        const { name, value } = e.target
+        setForm(prev => ({
+            ...prev,
+            [name]: name === "Grade"
+                ? (value === "" ? "" : Number(value))
+                : value
+        }))
+        console.log(name,value)
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (!form.First_Name || !form.Last_Name || !form.Grade || !form.Subject_1) {
-            alert("Please complete all required fields")
+        const { Grade_List, ...cleanForm } = form
+        const { error } = await updateUserInformation(cleanForm)
+        if (error) {
+            console.error(error)
+            alert(error.message)
             return
         }
-        await updateUserInformation(form)
-        navigate("/dashboard")
+        const load = async () => {
+            await fetchUser()
+        }
+        load()
+        navigate("/MonthlyView")
     }
     const handleLogout = async () => {
-            await logoutUser()
-            navigate("/")
-        }
+        await logoutUser()
+        navigate("/")
+    }
     return (
         <div className="profile-container">
+            <button className="x-close" onClick={() => return_(navigate, "/MonthlyView")}>
+                ✕
+            </button>
             <h2>Complete Your Profile</h2>
             <form onSubmit={handleSubmit}>
                 <input
@@ -67,15 +87,19 @@ function ProfileSetup() {
                 />
                 <select
                     name="Grade"
-                    value={form.Grade || ""}
+                    value={form.Grade_ID || ""}
                     onChange={handleChange}
                     required
                 >
                     <option value="">Select Grade</option>
                     {grades.map(g => (
-                        <option key={g.Grade_ID} value={g.Grade_ID}>
-                            {g.Grade_Name}
-                        </option>
+                        g.Grade_ID === 0 ? (
+                            null
+                        ) : (
+                            <option key={g.Grade_ID} value={g.Grade_ID}>
+                                {g.Grade_Name}
+                            </option>
+                        )
                     ))}
                 </select>
                 {[1,2,3,4,5,6,7,8].map(num => (
@@ -90,10 +114,7 @@ function ProfileSetup() {
                 ))}
                 <button type="submit" disabled={!form.First_Name || !form.Last_Name || !form.Grade || !form.Subject_1}>Save</button>
             </form>
-            <div>
-                <h1>Dashboard</h1>
-                <button onClick={handleLogout}>Logout</button>
-            </div>
+            <button onClick={handleLogout}>Logout</button>
         </div>
     )
 }

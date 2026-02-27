@@ -2,7 +2,7 @@ import React from "react"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Login from "./components/auth/Login"
 import Signup from "./components/auth/Signup"
-import Dashboard from "./pages/Dashboard"
+import MonthlyView from "./pages/MonthlyView"
 import EmailConfirmation from "./pages/EmailConfirmation"
 import ProfileSetup from "./pages/ProfileSetup"
 import ProtectedRoute from "./components/layout/ProtectedRoute"
@@ -19,11 +19,11 @@ function App() {
           <Route path="/ProfileSetup" element={<ProfileSetup />} />
           <Route path="/confirm-email" element={<EmailConfirmation />} />
           <Route
-            path="/dashboard"
+            path="/MonthlyView"
             element={
               <ProtectedRoute>
                 <Layout>
-                  <Dashboard />
+                  <MonthlyView />
                 </Layout>
               </ProtectedRoute>
             }

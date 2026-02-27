@@ -2,7 +2,10 @@ import React, { useState } from "react"
 import { resendConfirmationEmail, loginUser } from "../../services/authService"
 import "./Auth.css"
 import { useNavigate, Link } from "react-router-dom"
+import { UserContext } from "../context/UserContext"
+import { useContext } from "react"
 function Login() {
+    const { user, loading, fetchUser } = useContext(UserContext)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
@@ -20,7 +23,11 @@ function Login() {
                 setError(error.message)
             }
         } else {
-            navigate("/dashboard")
+            const load = async () => {
+                await fetchUser()
+            }
+            load()
+            navigate("/MonthlyView")
         }
     }
     return (

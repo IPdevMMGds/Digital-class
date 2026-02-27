@@ -25,6 +25,7 @@ export const getUserInformation = async () => {
   return {
     data: {
       ...data,
+      Grade_ID: data.Grade,
       Grade: data.Grade_List.Grade_Name,
     },
     error: null
