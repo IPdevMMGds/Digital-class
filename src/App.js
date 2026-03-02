@@ -8,7 +8,7 @@ import ProfileSetup from "./pages/ProfileSetup"
 import ProtectedRoute from "./components/layout/ProtectedRoute"
 import { UserProvider } from "./components/context/UserContext"
 import Layout from "./components/layout/Layout"
-
+import WeeklyView from "./pages/WeeklyView"
 function App() {
   return (
     <UserProvider>
@@ -24,6 +24,16 @@ function App() {
               <ProtectedRoute>
                 <Layout>
                   <MonthlyView />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/WeeklyView"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <WeeklyView />
                 </Layout>
               </ProtectedRoute>
             }

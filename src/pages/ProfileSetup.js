@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { getGradeList, updateUserInformation, getUserInformation } from "../services/userService"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { logoutUser } from "../services/authService"
 import { return_ } from "../components/utility/x_close";
 import { UserContext } from "../components/context/UserContext"
@@ -8,6 +8,8 @@ import { useContext } from "react"
 function ProfileSetup() {
     const { user, loading, fetchUser } = useContext(UserContext)
     const navigate = useNavigate()
+    const location = useLocation()
+    const returnPath = location.state?.from || "/MonthlyView"
     const [grades, setGrades] = useState([])
     const [form, setForm] = useState({
         First_Name: "",
@@ -58,7 +60,7 @@ function ProfileSetup() {
             await fetchUser()
         }
         load()
-        navigate("/MonthlyView")
+        navigate(returnPath)
     }
     const handleLogout = async () => {
         await logoutUser()
@@ -66,7 +68,7 @@ function ProfileSetup() {
     }
     return (
         <div className="profile-container">
-            <button className="x-close" onClick={() => return_(navigate, "/MonthlyView")}>
+            <button className="x-close" onClick={() => return_(navigate, `${returnPath}`)}>
                 ✕
             </button>
             <h2>Complete Your Profile</h2>

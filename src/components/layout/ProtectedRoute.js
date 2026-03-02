@@ -10,31 +10,25 @@ function ProtectedRoute({ children }) {
     }, [])
     const checkUser = async () => {
         const { data: { user } } = await supabase.auth.getUser()
-
         if (!user) {
             setRedirect("/")
             setLoading(false)
             return
         }
-
         const { data, error } = await getUserInformation()
-
         if (error) {
             console.error("User info fetch error:", error)
             setLoading(false)
             return
         }
-
         if (!data) {
             console.error("No user information row found")
             setLoading(false)
             return
         }
-
         if (!data.First_Name || !data.Subject_1) {
             setRedirect("/ProfileSetup")
         }
-
         setLoading(false)
     }
     if (loading) return null
