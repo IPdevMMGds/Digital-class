@@ -1,0 +1,36 @@
+.calendar-container {
+  padding: 0px;
+  margin: 0;
+  overflow-x: auto;
+  overflow-y: auto;
+  height: 93vh;
+}
+.calendar-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.calendar-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+.calendar-table thead th {
+  position: sticky;
+  top: 0px;
+  background: #e0e0e0;
+  z-index: 10;
+  border-bottom: 2px solid #cccccc;
+  padding: 8px 0;
+}
+.calendar-cell {
+  vertical-align: top;
+  padding: 6px;
+  position: relative;
+}
+.today-cell {
+  background-color: #a4cbff;
+  font-weight: bold;
+}
+.past-cell {
+  background-color: #e6e6e6;
+}
